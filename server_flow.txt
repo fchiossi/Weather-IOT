@@ -1,0 +1,126 @@
+[
+    {
+        "id": "ae445c97.c1ba4",
+        "type": "ibmiot in",
+        "z": "2becc63e.96d3da",
+        "authentication": "boundService",
+        "apiKey": "",
+        "inputType": "evt",
+        "deviceId": "",
+        "applicationId": "",
+        "deviceType": "+",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 83,
+        "y": 86,
+        "wires": [
+            [
+                "593eca4b.a3e434",
+                "656bb58c.2b6144"
+            ]
+        ]
+    },
+    {
+        "id": "593eca4b.a3e434",
+        "type": "debug",
+        "z": "2becc63e.96d3da",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 290,
+        "y": 85.25,
+        "wires": []
+    },
+    {
+        "id": "1c72c8dc.7189f7",
+        "type": "ibmiot out",
+        "z": "2becc63e.96d3da",
+        "authentication": "boundService",
+        "apiKey": "",
+        "outputType": "cmd",
+        "deviceId": "",
+        "deviceType": "",
+        "eventCommandType": "display",
+        "format": "json",
+        "data": "{}",
+        "qos": 0,
+        "name": "IBM IoT",
+        "service": "registered",
+        "x": 677,
+        "y": 290.25,
+        "wires": []
+    },
+    {
+        "id": "950cdbce.35cc98",
+        "type": "weather_insights",
+        "z": "2becc63e.96d3da",
+        "name": "",
+        "service": "/observations.json",
+        "geocode": "",
+        "units": "m",
+        "language": "",
+        "x": 359,
+        "y": 221,
+        "wires": [
+            [
+                "b3243df5.3e7278"
+            ]
+        ]
+    },
+    {
+        "id": "c23f2673.9cdb58",
+        "type": "debug",
+        "z": "2becc63e.96d3da",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 675,
+        "y": 356,
+        "wires": []
+    },
+    {
+        "id": "b3243df5.3e7278",
+        "type": "function",
+        "z": "2becc63e.96d3da",
+        "name": "Prepare Answer",
+        "func": "msg.payload = msg.observation;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 456,
+        "y": 291,
+        "wires": [
+            [
+                "1c72c8dc.7189f7",
+                "c23f2673.9cdb58"
+            ]
+        ]
+    },
+    {
+        "id": "656bb58c.2b6144",
+        "type": "function",
+        "z": "2becc63e.96d3da",
+        "name": "Extract Location",
+        "func": "msg.payload = msg.payload.d.value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 250.5,
+        "y": 148.75,
+        "wires": [
+            [
+                "950cdbce.35cc98"
+            ]
+        ]
+    }
+]
